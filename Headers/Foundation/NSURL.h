@@ -596,6 +596,7 @@ GS_EXPORT NSString* const NSURLUbiquitousItemDownloadingStatusCurrent;
 @interface NSURLQueryItem : NSObject <NSCopying, NSCoding>
 {
 #if	GS_EXPOSE(NSURLQueryItem)
+  void *_NSURLQueryItemInternal;
 #endif
 #if     GS_NONFRAGILE
 #  if	defined(GS_NSURLQueryItem_IVARS)

@@ -92,9 +92,13 @@ function may be incorrect
 
 #import "GNUstepBase/NSURL+GNUstepBase.h"
 
-#define	GSInternal NSURLComponentsInternal
+//#define	GSInternal NSURLComponentsInternal
+//#include "GSInternal.h"
+//GS_PRIVATE_INTERNAL(NSURLComponents)
+
+#define GSInternal NSURLQueryItemInternal
 #include "GSInternal.h"
-GS_PRIVATE_INTERNAL(NSURLComponents)
+GS_PRIVATE_INTERNAL(NSURLQueryItem)
 
 NSString * const NSURLErrorDomain = @"NSURLErrorDomain";
 NSString * const NSErrorFailingURLStringKey = @"NSErrorFailingURLStringKey";
@@ -2179,24 +2183,48 @@ static NSUInteger	urlAlign;
 + (instancetype)queryItemWithName:(NSString *)name 
                             value:(NSString *)value
 {
-  return nil;
+  return AUTORELEASE([[self alloc] initWithName:name value:value]);
+}
+
+- (instancetype) init
+{
+  self = [super init];
+  if(self != nil)
+  {
+    GS_CREATE_INTERNAL(NSURLQueryItem);
+  }
+  return self;
 }
 
 - (instancetype)initWithName:(NSString *)name 
                        value:(NSString *)value
 {
-  return nil;
+  self = [self init];
+  if(self != nil)
+  {
+    ASSIGN(internal->_name, name);
+    ASSIGN(internal->_value, value);
+  }
+  return self;
+}
+
+- (void) dealloc
+{
+  RELEASE(internal->_name);
+  RELEASE(internal->_value);
+  
+  [super dealloc];
 }
 
 // Reading a name and value from a query
 - (NSString *) name
 {
-  return nil;
+  return internal->_name;
 }
 
 - (NSString *) value
 {
-  return nil;
+  return internal->_value;
 }
 
 - (id) initWithCoder: (NSCoder *)acoder
@@ -2215,19 +2243,24 @@ static NSUInteger	urlAlign;
 
 @end
 
+#undef GSInternal
+#define  GSInternal NSURLComponentsInternal
+#include "GSInternal.h"
+GS_PRIVATE_INTERNAL(NSURLComponents)
+
 @implementation NSURLComponents 
 
 // Creating URL components...
 + (instancetype) componentsWithString:(NSString *)urlString
 {
-  return [[NSURLComponents alloc] initWithString: urlString];
+  return  AUTORELEASE([[NSURLComponents alloc] initWithString: urlString]);
 }
 
 + (instancetype) componentsWithURL:(NSURL *)url 
            resolvingAgainstBaseURL:(BOOL)resolve
 {
-  return [[NSURLComponents alloc] initWithURL: url
-                      resolvingAgainstBaseURL: resolve];
+  return  AUTORELEASE([[NSURLComponents alloc] initWithURL: url
+                      resolvingAgainstBaseURL: resolve]);
 }
 
 - (instancetype) init
@@ -2352,14 +2385,29 @@ static NSUInteger	urlAlign;
                          [NSCharacterSet URLUserAllowedCharacterSet]]];
 
   // Find ranges
-  internal->_rangeOfFragment   = [[url absoluteString] rangeOfString: internal->_fragment];
-  internal->_rangeOfHost       = [[url absoluteString] rangeOfString: internal->_host];
-  internal->_rangeOfPassword   = [[url absoluteString] rangeOfString: internal->_password];
-  internal->_rangeOfPath       = [[url absoluteString] rangeOfString: internal->_path];
-  internal->_rangeOfPort       = [[url absoluteString] rangeOfString: [internal->_port stringValue]];
-  internal->_rangeOfQuery      = [[url absoluteString] rangeOfString: internal->_query];
-  internal->_rangeOfScheme     = [[url absoluteString] rangeOfString: internal->_scheme];
-  internal->_rangeOfUser       = [[url absoluteString] rangeOfString: internal->_user];
+  if(internal->_fragment) internal->_rangeOfFragment = [[url absoluteString] rangeOfString: internal->_fragment];
+  else internal->_rangeOfFragment.location = NSNotFound;
+  
+  if(internal->_host) internal->_rangeOfHost = [[url absoluteString] rangeOfString: internal->_host];
+  else internal->_rangeOfHost.location = NSNotFound;
+  
+  if(internal->_password) internal->_rangeOfPassword = [[url absoluteString] rangeOfString: internal->_password];
+  else internal->_rangeOfPassword.location = NSNotFound;
+  
+  if(internal->_path) internal->_rangeOfPath = [[url absoluteString] rangeOfString: internal->_path];
+  else internal->_rangeOfPath.location = NSNotFound;
+  
+  if(internal->_port) internal->_rangeOfPort = [[url absoluteString] rangeOfString: [internal->_port stringValue]];
+  else internal->_rangeOfPort.location = NSNotFound;
+  
+  if(internal->_query)  internal->_rangeOfQuery = [[url absoluteString] rangeOfString: internal->_query];
+  else internal->_rangeOfQuery.location = NSNotFound;
+  
+  if(internal->_scheme) internal->_rangeOfScheme = [[url absoluteString] rangeOfString: internal->_scheme];
+  else internal->_rangeOfScheme.location = NSNotFound;
+  
+  if(internal->_user) internal->_rangeOfUser = [[url absoluteString] rangeOfString: internal->_user];
+  else internal->_rangeOfUser.location = NSNotFound;
 }
 
 - (NSURL *)URLRelativeToURL: (NSURL *)baseURL
