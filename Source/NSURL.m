@@ -2116,17 +2116,25 @@ GS_PRIVATE_INTERNAL(NSURLQueryItem)
   return AUTORELEASE(newQueryItem);
 }
 
-- (instancetype)initWithName:(NSString *)name
-                       value:(NSString *)value
+- (instancetype) init
 {
   self = [super init];
-  if (self != nil)
-    {
-      GS_CREATE_INTERNAL(NSURLQueryItem);
-      
-      ASSIGNCOPY(internal->_name, name);
-      ASSIGNCOPY(internal->_value, value);
-    }
+  if(self != nil)
+  {
+    GS_CREATE_INTERNAL(NSURLQueryItem);
+  }
+  return self;
+}
+
+- (instancetype)initWithName:(NSString *)name 
+                       value:(NSString *)value
+{
+  self = [self init];
+  if(self != nil)
+  {
+    ASSIGN(internal->_name, name);
+    ASSIGN(internal->_value, value);
+  }
   return self;
 }
 
@@ -2225,14 +2233,14 @@ static NSCharacterSet	*queryItemCharSet = nil;
 // Creating URL components...
 + (instancetype) componentsWithString: (NSString *)urlString
 {
-  return [[NSURLComponents alloc] initWithString: urlString];
+  return  AUTORELEASE([[NSURLComponents alloc] initWithString: urlString]);
 }
 
 + (instancetype) componentsWithURL: (NSURL *)url 
            resolvingAgainstBaseURL: (BOOL)resolve
 {
-  return [[NSURLComponents alloc] initWithURL: url
-                      resolvingAgainstBaseURL: resolve];
+  return  AUTORELEASE([[NSURLComponents alloc] initWithURL: url
+                      resolvingAgainstBaseURL: resolve]);
 }
 
 - (instancetype) init
