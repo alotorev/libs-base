@@ -3,6 +3,7 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSCharacterSet.h>
 #import <Foundation/NSURL.h>
+#import <Foundation/NSValue.h>
 
 
 int main (int argc, const char * argv[])
