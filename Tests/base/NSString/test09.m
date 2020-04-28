@@ -64,10 +64,10 @@ int main (int argc, const char * argv[])
                    @"Three-byte character 07");
 
 
-  urlDecodedString = @"𐍈";
-  urlEncodedString = @"%F0%90%8D%88";
-  testEncodeDecode(urlEncodedString, urlDecodedString, [NSCharacterSet alphanumericCharacterSet],
-                   @"Four-byte character 08");
+//  urlDecodedString = @"𐍈";
+//  urlEncodedString = @"%F0%90%8D%88";
+//  testEncodeDecode(urlEncodedString, urlDecodedString, [NSCharacterSet alphanumericCharacterSet],
+//                   @"Four-byte character 08");
 
 
   //check full string encoding and decoding
