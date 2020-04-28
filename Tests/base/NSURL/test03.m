@@ -2,6 +2,7 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSString.h>
 #import <Foundation/NSCharacterSet.h>
+#import <Foundation/NSURL.h>
 
 
 int main (int argc, const char * argv[])
@@ -38,7 +39,7 @@ int main (int argc, const char * argv[])
       PASS_EQUAL(item.value, value, "Value is %s", [value UTF8String]);
   }
     
-  NSArray* schemaArr = @[@"http", @"https" @"ftp"];
+  NSArray* schemaArr = @[@"http", @"https", @"ftp"];
   NSArray* hostArr =  @[@"somedomain.com", @"localhost"];
   NSArray* portArr = @[@123, @100000, @0];
   NSArray* dirArr  = @[@"dir", @"dir", @".."];
