@@ -2122,6 +2122,7 @@ GS_PRIVATE_INTERNAL(NSURLQueryItem)
   if(self != nil)
   {
     GS_CREATE_INTERNAL(NSURLQueryItem);
+    ASSIGN(internal->_name, name);
   }
   return self;
 }
@@ -2132,7 +2133,8 @@ GS_PRIVATE_INTERNAL(NSURLQueryItem)
   self = [self init];
   if(self != nil)
   {
-    ASSIGN(internal->_name, name);
+    if(name)ASSIGN(internal->_name, name);
+    else ASSIGN(internal->_name, @"");
     ASSIGN(internal->_value, value);
   }
   return self;
