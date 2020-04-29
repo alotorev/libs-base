@@ -2122,7 +2122,7 @@ GS_PRIVATE_INTERNAL(NSURLQueryItem)
   if(self != nil)
   {
     GS_CREATE_INTERNAL(NSURLQueryItem);
-    ASSIGN(internal->_name, name);
+    ASSIGN(internal->_name, @"");
   }
   return self;
 }
