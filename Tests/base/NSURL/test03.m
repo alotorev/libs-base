@@ -4,6 +4,7 @@
 #import <Foundation/NSCharacterSet.h>
 #import <Foundation/NSURL.h>
 #import <Foundation/NSValue.h>
+#import <Foundation/NSArray.h>
 
 
 int main (int argc, const char * argv[])
@@ -65,7 +66,7 @@ int main (int argc, const char * argv[])
                              schema,host,port,dir,file,extension,qname1,qvalue1];
       
           NSURL* url = [NSURL URLWithString:urlString];
-          URLComponents* comp = [URLComponents componentsWithString:urlString];
+          NSURLComponents* comp = [NSURLComponents componentsWithString:urlString];
           NSLog(@"%@", url);
           NSLog(@"%@", ([[comp URL] absoluteString]));
           PASS_EQUAL([url absoluteString], [[comp URL] absoluteString], "Should be equal");
