@@ -41,8 +41,8 @@ int main (int argc, const char * argv[])
   }
     
   NSArray* schemaArr = @[@"http", @"https", @"ftp"];
-  NSArray* hostArr =  @[@"somedomain.com", @"localhost"];
-  NSArray* portArr = @[@123, @100000, @0];
+  NSArray* hostArr =  @[@"somedomain.com", @"localhost", @"dom.ru"];
+  NSArray* portArr = @[@123, @100000, @12];
   NSArray* dirArr  = @[@"dir", @"dir", @".."];
   NSArray* fileArr = @[@"file", @"file", @"file"];
   NSArray* extensionArr = @[@"ext", @"a", @"a"];
@@ -64,8 +64,11 @@ int main (int argc, const char * argv[])
       NSString* urlString = [NSString stringWithFormat:@"%@://%@:%@/%@/%@.%@?%@=%@",
                              schema,host,port,dir,file,extension,qname1,qvalue1];
       
-          NSURLComponents* comp = [NSURLComponents componentsWithString:urlString];
+          NSURL* url = [NSURL URLWithString:urlString];
+          URLComponents* comp = [URLComponents componentsWithString:urlString];
+          NSLog(@"%@", url);
           NSLog(@"%@", ([[comp URL] absoluteString]));
+          PASS_EQUAL([url absoluteString], [[comp URL] absoluteString], "Should be equal");
       
           PASS_EQUAL([comp host], host, "Checking host")
           PASS_EQUAL([comp port], port, "Cheking ports");
