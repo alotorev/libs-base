@@ -4,9 +4,6 @@
 #import <Foundation/NSCharacterSet.h>
 #import <Foundation/NSURL.h>
 #import <Foundation/NSValue.h>
-#import "MYURLComponents.h"
-
-#define URLComponents NSURLComponents
 
 int main (int argc, const char * argv[])
 {
