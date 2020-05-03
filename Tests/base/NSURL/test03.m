@@ -124,7 +124,7 @@ int main (int argc, const char * argv[])
     
   NSString* s = @"\U00010410\U00010430\U00010411\U00010431\U00010412\U00010432\U00010413\U00010433\U00010414\U00010434";
   NSLog(@"%@", s);
-    
+     
   testNSURLQueryItem();
     
   NSMutableArray* d = [NSMutableArray new];
@@ -170,7 +170,7 @@ int main (int argc, const char * argv[])
           testNSURLComponents(comp, t);
               
           NSURLQueryItem* item2 = [NSURLQueryItem queryItemWithName:[t.qname1 stringByRemovingPercentEncoding] value:[t.qvalue1 stringByRemovingPercentEncoding]];
-              [comp setQueryItems:@[item2]];
+              [comp setQueryItems:[NSArray arrayWithObject:item2]];
           
           comp = [[NSURLComponents alloc] init];
           [comp setScheme:t.scheme];
