@@ -341,12 +341,12 @@ GSPathHandling("right");
 
   ///NSURLQueryItem
   
-  //OSX behavior is to return item with empty string name
+  //OSX behavior is to return query item with an empty string name
   NSURLQueryItem* item = [[NSURLQueryItem alloc] init];
   PASS_EQUAL(item.name, @"", "NSURLQueryItem.name should not be nil");
   PASS_EQUAL(item.value, nil, "NSURLQueryItem.value should be nil");
     
-  //OSX behavior is to return item with empty string name ive
+  //OSX behavior is to return query item with an empty string name
   item = [[NSURLQueryItem alloc] initWithName:nil value:nil];
   PASS_EQUAL(item.name, @"", "NSURLQueryItem.name should not be nil");
   PASS_EQUAL(item.value, nil, "NSURLQueryItem.value should be nil");

@@ -92,8 +92,8 @@ int main()
   
   item = [NSURLQueryItem queryItemWithName:cyrillicStr value:cyrillicStr];
   [components setQueryItems:[NSArray arrayWithObject:item]];
-  PASS_EQUAL([components string], urlString, "Encoded url string from unencoded items");
-  PASS_EQUAL([components URL], [NSURL URLWithString:urlString], "Encoded url query part from unencoded items");
+  PASS_EQUAL([components string], urlString, "Encoded url string from unencoded item");
+  PASS_EQUAL([components URL], [NSURL URLWithString:urlString], "Encoded url query part from unencoded item");
     
   NSString* invalidUrlString = @"\U00000410\U00000430\U00000411\U00000431";
   PASS_EQUAL([NSURL URLWithString:invalidUrlString], nil, "nil NSURL from invalid string")
